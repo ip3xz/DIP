@@ -1,0 +1,29 @@
+clc; 
+close all; 
+clear bar;
+
+I = imread("cameraman.tif");
+j = im2double(I);
+
+subplot(2,2,1);
+imshow(I);
+title('Original Image');
+
+k = dct2(j);
+subplot(2,2,2);
+imshow(j);
+title('Converted to im2double');
+
+m = im2double(k);
+subplot(2,2,3);
+imshow(m);
+title('DCT Coefficients');
+
+n = idct(m);
+subplot(2,2,4);
+imshow(n);
+title('Reconstructed Image (IDCT)');
+
+info = imfinfo('cameraman.tif');
+disp('Image Information:');
+disp(info);

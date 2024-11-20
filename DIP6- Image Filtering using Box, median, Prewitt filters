@@ -1,0 +1,96 @@
+clc;
+close all;
+clear all;
+
+% Read the image
+I = imread('sixth.bmp');
+figure(1);
+subplot(2, 2, 1);
+imshow(I);
+title('Original Image');
+
+% Convert to grayscale if it's a colored image
+if size(I, 3) == 3
+    I = rgb2gray(I);
+end
+
+% Define a weighted average filter kernel (3x3)
+kernel = [1 2 1;
+          2 4 2;
+          1 2 1] / 16; % Normalized by 16 to make the sum 1
+
+% Apply the filter using imfilter
+output_img = imfilter(I, kernel, 'same');
+
+% Display the filtered image in the second subplot
+subplot(2, 2, 2);
+imshow(output_img);
+title('Weighted Average Filtered Image');
+
+% Add salt and pepper noise
+noise_img = imnoise(output_img, 'salt & pepper', 0.02);
+subplot(2, 2, 3);
+imshow(noise_img);
+title('Adding Salt and Pepper Noise');
+
+% Apply median filter
+median_filtered_img = medfilt2(noise_img, [3 3]);
+subplot(2, 2, 4);
+imshow(median_filtered_img);
+title('Median Filtered Image');
+
+% Define Laplacian filter kernel for edge detection
+kernel1 = [-1, -1, -1;
+           -1,  8, -1;
+           -1, -1, -1];
+
+laplacian_filtered_img = imfilter(I, kernel1, 'same');
+
+% Create a new figure for the Laplacian filter results
+figure(2);
+subplot(2, 2, 1);
+imshow(laplacian_filtered_img, []);
+title('Laplacian Filtered Image');
+
+% Box Filter (Mean Filter)
+box_filter = fspecial('average', [3 3]);
+box_filtered_img = imfilter(I, box_filter, 'same');
+
+% Display Box Filtered Image
+subplot(2, 2, 2);
+imshow(box_filtered_img);
+title('Box Filtered Image');
+
+% Sobel Filter (Edge Detection)
+sobel_filter_x = fspecial('sobel'); % X direction
+sobel_filter_y = sobel_filter_x';  % Y direction
+
+% Apply Sobel filter
+sobel_filtered_x = imfilter(I, sobel_filter_x, 'same');
+sobel_filtered_y = imfilter(I, sobel_filter_y, 'same');
+
+% Display Sobel Filtered Images
+figure(4);
+subplot(1, 2, 1);
+imshow(sobel_filtered_x, []);
+title('Sobel Filter X Direction');
+subplot(1, 2, 2);
+imshow(sobel_filtered_y, []);
+title('Sobel Filter Y Direction');
+
+% Prewitt Filter (Edge Detection)
+prewitt_filter_x = fspecial('prewitt'); % X direction
+prewitt_filter_y = prewitt_filter_x';   % Y direction
+
+% Apply Prewitt filter
+prewitt_filtered_x = imfilter(I, prewitt_filter_x, 'same');
+prewitt_filtered_y = imfilter(I, prewitt_filter_y, 'same');
+
+% Display Prewitt Filtered Images
+figure(3);
+subplot(1, 2, 1);
+imshow(prewitt_filtered_x, []);
+title('Prewitt Filter X Direction');
+subplot(1, 2, 2);
+imshow(prewitt_filtered_y, []);
+title('Prewitt Filter Y Direction');

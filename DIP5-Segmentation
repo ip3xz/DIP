@@ -1,0 +1,56 @@
+clc;
+clear all;
+close all;
+
+% Reading the image
+figure(1);
+subplot(2,2,1);
+I = imread('sanika.jpg');
+
+% Check if the image is grayscale
+if size(I, 3) == 3
+    I = rgb2gray(I); % Convert to grayscale if it's an RGB image
+end
+imshow(I);
+title("Original image");
+
+% Plotting the histogram
+subplot(2,2,2);
+p = imhist(I);
+stem(p);
+title("Histogram");
+xlabel("Gray level");
+ylabel("Occurrence of Gray scale");
+
+% Get the size of the image
+[M, N] = size(I);
+
+% Initialize color channels
+red = zeros(M, N);
+green = zeros(M, N);
+blue = zeros(M, N);
+
+% Color mapping based on intensity levels
+for x = 1:M
+    for y = 1:N
+        if I(x, y) >= 0 && I(x, y) <= 110
+            red(x, y) = 255;
+            green(x, y) = 0;
+            blue(x, y) = 0;
+        elseif I(x, y) >= 111 && I(x, y) <= 180
+            red(x, y) = 0;
+            green(x, y) = 255;
+            blue(x, y) = 0;
+        elseif I(x, y) >= 181 && I(x, y) <= 255
+            red(x, y) = 0;
+            green(x, y) = 0;
+            blue(x, y) = 255;
+        end
+    end
+end
+
+% Create the final image
+final = cat(3, red, green, blue);
+subplot(2,2,3);
+imshow(uint8(final)); % Convert to uint8 before displaying
+title("Colored Segmented Image");

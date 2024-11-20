@@ -1,0 +1,64 @@
+clc; 
+clear all; 
+close all;
+
+% Read and display the original image
+A = imread("peppers.png");
+figure(1);
+subplot(2,2,1); 
+imshow(A); 
+title("Original image");
+
+% Decompose into RGB channels
+R = A(:,:,1); 
+G = A(:,:,2); 
+B = A(:,:,3); 
+subplot(2,2,2); imshow(R); title("Red channel");
+subplot(2,2,3); imshow(G); title("Green channel");
+subplot(2,2,4); imshow(B); title("Blue channel");
+
+% Binarize RGB channels
+R_B = imbinarize(R); 
+G_B = imbinarize(G); 
+B_B = imbinarize(B);
+
+figure(2);
+subplot(2,2,1); imshow(A); title("Original image");
+subplot(2,2,2); imshow(R_B); title("Red channel Binarized");
+subplot(2,2,3); imshow(G_B); title("Green channel Binarized");
+subplot(2,2,4); imshow(B_B); title("Blue channel Binarized");
+
+% Arithmetic operations
+A_add = imadd(R_B, G_B); 
+A_sub = imsubtract(R_B, G_B);
+A_mul = immultiply(R_B, G_B); 
+A_div = imdivide(R_B, G_B);
+
+figure(3);
+subplot(2,2,1); imshow(A_add); title("Addition");
+subplot(2,2,2); imshow(A_sub); title("Subtraction");
+subplot(2,2,3); imshow(A_mul); title("Multiplication");
+subplot(2,2,4); imshow(A_div); title("Division");
+
+% Logical operations
+A_addi = R_B & G_B;
+A_or = R_B | G_B;
+A_Xor = xor(R_B, G_B);
+A_comp = ~R_B;
+
+figure(4);
+subplot(2,2,1); imshow(A_addi); title("Logical AND");
+subplot(2,2,2); imshow(A_or); title("Logical OR");
+subplot(2,2,3); imshow(A_Xor); title("Logical XOR");
+subplot(2,2,4); imshow(A_comp); title("Logical Complement");
+
+% Spatial operations
+A_expand = imresize(R_B, 2);
+A_compress = imresize(R_B, 0.5);
+A_rotate = imrotate(R_B, 90);
+
+figure(5);
+subplot(2,2,1); imshow(R_B); title("Original image");
+subplot(2,2,2); imshow(A_expand); title("Expanded image");
+subplot(2,2,3); imshow(A_compress); title("Compressed image");
+subplot(2,2,4); imshow(A_rotate); title("Rotation by 90 degrees");

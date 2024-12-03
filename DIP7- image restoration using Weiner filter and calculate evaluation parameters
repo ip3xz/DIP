@@ -22,4 +22,3 @@ PSNR= 10* log10 (psnr(wnr1,Idouble));
 display(SSIM);
 display(PSNR);
 
-

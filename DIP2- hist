@@ -1,5 +1,22 @@
 clc; 
 close all; 
+clear all; 
+img = imread('Capture.PNG'); 
+subplot (2,2,1); 
+imshow(img); 
+title('low contrast'); 
+h= histeq(img); 
+subplot (2,2,2); 
+imshow (h); 
+title('high contrast'); 
+subplot (2,2,3) 
+imhist (img); 
+subplot (2,2,4); 
+imhist (h); 
+
+-------------------
+clc; 
+close all; 
 clear bar;
 
 I = imread("cameraman.tif");

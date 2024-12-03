@@ -1,0 +1,27 @@
+clc;
+close all;
+clear all;
+figure(1);
+image1= [0,1,0,1; 1,0,1,0; 0,1,0,1; 1,0,1,0];
+subplot(2,2,1);
+imshow(image1);
+title('chessboard image');
+image2= [0,0.25,0.75,0.9; 0,0.25,0.75,0.9; 0,0.25,0.75,0.9;
+0,0.25,0.75,0.9;]
+subplot(2,2,2);
+imshow(image2);
+title('greyscale');
+image3=[0,1,0,0,0; 0,1,1,1,0; 0,1,0,0,0; 0,1,0,1,1; 0,1,0,0,0];
+subplot(2,2,3);
+imshow(image3);
+title('symbol 12');
+image4=[1,0,0,1,0,0,1;
+1,1,1,1,1,1,1;
+1,1,1,0,1,1,1;
+1,1,1,1,1,1,1;
+1,0,1,1,1,0,1;
+1,1,0,1,0,1,1;
+1,1,1,0,1,1,1];
+subplot(2,2,4);
+imshow(image4);
+title('smilee');

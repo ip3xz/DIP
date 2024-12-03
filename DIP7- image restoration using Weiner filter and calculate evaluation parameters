@@ -1,41 +1,25 @@
-clc;
 close all;
-
-% Read the image
 Ioriginal = imread("cameraman.tif");
-
-% Display original image
 figure(1);
 subplot(2,2,1);
-imshow(Ioriginal);
-title("Original Image");
-
-% Define the Point Spread Function (PSF)
-PSF = fspecial("motion", 21, 11);
-
-% Convert to double precision
+imshow(Ioriginal)
+title("Original Image")
+PSF = fspecial("motion",21,11);
 Idouble = im2double(Ioriginal);
-
-% Apply motion blur
-blurred = imfilter(Idouble, PSF, "conv", "circular");
-
-% Display blurred image
+blurred = imfilter(Idouble,PSF,"conv","circular");
+figure(1);
 subplot(2,2,2);
-imshow(blurred);
-title("Blurred Image");
-
-% Perform Wiener deconvolution to restore the image
-wnr1 = deconvwnr(blurred, PSF);
-
-% Display restored image
+imshow(blurred)
+title("Blurred Image")
+wnr1 = deconvwnr(blurred,PSF);
+figure(1);
 subplot(2,2,3);
-imshow(wnr1);
-title("Restored Blurred Image");
+imshow(wnr1)
+title("Restored Blurred Image")
+%Calculate ssim and psnr
+SSIM= ssim(wnr1,Idouble);
+PSNR= 10* log10 (psnr(wnr1,Idouble));
+display(SSIM);
+display(PSNR);
 
-% Calculate SSIM and PSNR
-SSIM = ssim(wnr1, Ioriginal);  % SSIM uses the original image
-PSNR = 10 * log10((1^2) / mean((wnr1(:) - Ioriginal(:)).^2));  % PSNR calculation
 
-% Display the results
-disp(['SSIM: ', num2str(SSIM)]);
-disp(['PSNR: ', num2str(PSNR)]);
